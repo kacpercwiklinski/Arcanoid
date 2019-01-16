@@ -1,6 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Arcanoid.Class.Screen;
+using Arcanoid.Class.Utils;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
+using static Arcanoid.Class.Screen.MainMenuScreen;
 
 namespace Arcanoid
 {
@@ -11,11 +15,30 @@ namespace Arcanoid
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        
+        public static TextureManager textureManager;
+        public static AudioManager audioManager;
+
+        public const int WIDTH = 1280;
+        public const int HEIGHT = 720;
+
+        Screen mCurrentScreen;
+        SplashScreen mSplashScreen;
+        MainMenuScreen mMainMenuScreen;
+        GameScreen mGameScreen;
+        PauseScreen mPauseScreen;
+        GameOverScreen mGameOverScreen;
+        HighScoresScreen mHighScoresScreen;
+
+
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            graphics.PreferredBackBufferWidth = WIDTH;
+            graphics.PreferredBackBufferHeight = HEIGHT;
+
         }
 
         /// <summary>
@@ -39,8 +62,47 @@ namespace Arcanoid
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            textureManager = new TextureManager(this.Content);
+            audioManager = new AudioManager(this.Content);
 
-            // TODO: use this.Content to load your game content here
+            mSplashScreen = new SplashScreen(new EventHandler(splashScreenEvent));
+            mMainMenuScreen = new MainMenuScreen(new EventHandler(mainMenuScreenEvent));
+            mGameScreen = new GameScreen(new EventHandler(gameScreenEvent));
+            mGameOverScreen = new GameOverScreen(new EventHandler(gameOverScreenEvent));
+            mHighScoresScreen = new HighScoresScreen(new EventHandler(highScoresScreenEvent));
+            mPauseScreen = new PauseScreen(new EventHandler(pauseScreenEvent));
+            
+            mCurrentScreen = mSplashScreen;
+        }
+
+        private void pauseScreenEvent(object sender, EventArgs e) {
+            mCurrentScreen = mGameScreen;
+        }
+
+        private void highScoresScreenEvent(object sender, EventArgs e) {
+            mCurrentScreen = mMainMenuScreen;
+        }
+
+        private void gameOverScreenEvent(object sender, EventArgs e) {
+            mCurrentScreen = mMainMenuScreen;
+        }
+
+        private void gameScreenEvent(object sender, EventArgs e) {
+            mCurrentScreen = mGameOverScreen;
+        }
+
+        private void mainMenuScreenEvent(object sender, EventArgs e) {
+            Option chosenOption = mMainMenuScreen.options.Find((option) => option.active);
+            if (chosenOption.label.Equals("Play")) {
+                mCurrentScreen = mGameScreen;
+                mGameScreen.StartGame();
+            }  else if (chosenOption.label.Equals("Exit")) {
+                Exit();
+            }
+        }
+
+        private void splashScreenEvent(object sender, EventArgs e) {
+            mCurrentScreen = mMainMenuScreen;
         }
 
         /// <summary>
@@ -59,10 +121,10 @@ namespace Arcanoid
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            mCurrentScreen.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -73,9 +135,11 @@ namespace Arcanoid
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            mCurrentScreen.Draw(spriteBatch);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
