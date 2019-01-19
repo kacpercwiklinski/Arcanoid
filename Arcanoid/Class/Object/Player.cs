@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Arcanoid.Class.Utils;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -13,15 +14,31 @@ namespace Arcanoid.Class.Object {
         float speed = 400f;
         public Texture2D texture { get; set; }
         public int lives;
+        public Rectangle boundingBox;
 
         public Player() {
             this.texture = Game1.textureManager.playerTexture;
             this.position = new Vector2(Game1.WIDTH / 2, Game1.HEIGHT - this.texture.Height );
             this.lives = 4;
+            this.boundingBox = new Rectangle((int)this.position.X, (int)this.position.Y, this.texture.Width, this.texture.Height);
+        }
+
+        public Vector2 getPlayerPos() {
+            return this.position;
         }
         
         public void Update(GameTime gameTime) {
             handleMovement(gameTime);
+            updateBoundingBox();
+        }
+
+        private void updateBoundingBox() {
+            if (Game1.boundingBoxes.Contains(this.boundingBox)) {
+                Game1.boundingBoxes.Remove(this.boundingBox);
+            }
+
+            this.boundingBox = new Rectangle((int)this.position.X - this.texture.Width / 2, (int)this.position.Y - this.texture.Height / 2, this.texture.Width, this.texture.Height);
+            Game1.boundingBoxes.Add(this.boundingBox);
         }
 
         private void handleMovement(GameTime gameTime) {

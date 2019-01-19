@@ -4,6 +4,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using static Arcanoid.Class.Screen.MainMenuScreen;
 
 namespace Arcanoid
@@ -20,6 +22,8 @@ namespace Arcanoid
 
         public const int WIDTH = 1280;
         public const int HEIGHT = 720;
+        public const bool DEBUG_MODE = true;
+        public static List<Rectangle> boundingBoxes;
 
         Screen mCurrentScreen;
         SplashScreen mSplashScreen;
@@ -39,6 +43,7 @@ namespace Arcanoid
             graphics.PreferredBackBufferWidth = WIDTH;
             graphics.PreferredBackBufferHeight = HEIGHT;
 
+            boundingBoxes = new List<Rectangle>();
         }
 
         /// <summary>
@@ -62,8 +67,11 @@ namespace Arcanoid
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            LineBatch.Init(GraphicsDevice);
+
             textureManager = new TextureManager(this.Content);
             audioManager = new AudioManager(this.Content);
+            
 
             mSplashScreen = new SplashScreen(new EventHandler(splashScreenEvent));
             mMainMenuScreen = new MainMenuScreen(new EventHandler(mainMenuScreenEvent));
@@ -139,6 +147,11 @@ namespace Arcanoid
 
             spriteBatch.Begin();
             mCurrentScreen.Draw(spriteBatch);
+
+            if (DEBUG_MODE) {
+                boundingBoxes.ForEach((boundingBox) => LineBatch.drawBoundingBox(boundingBox, spriteBatch));
+            }
+
             spriteBatch.End();
 
             base.Draw(gameTime);

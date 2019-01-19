@@ -1,4 +1,5 @@
 ﻿using Arcanoid.Class.Object;
+using Arcanoid.Class.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,21 +16,26 @@ namespace Arcanoid.Class.Screen {
 
         Player player;
         Ball ball;
+        Level level;
+
+        public static int score = 0;
 
 
         public GameScreen(EventHandler theScreenEvent) : base(theScreenEvent) {
             mGameScreenBackground = Game1.textureManager.gameScreenBackground;
 
             player = new Player();
-            ball = new Ball(player);
+            level = new Level();
+            ball = new Ball(player,level);
         }
 
         public override void Update(GameTime gameTime) {
             player.Update(gameTime);
             ball.Update(gameTime);
+            level.Update(gameTime);
 
             if (Keyboard.GetState().IsKeyDown(Keys.X)) {
-                StartGame();
+
             }
 
             base.Update(gameTime);
@@ -40,13 +46,14 @@ namespace Arcanoid.Class.Screen {
 
             player.Draw(spriteBatch);
             ball.Draw(spriteBatch);
+            level.Draw(spriteBatch);
 
             base.Draw(spriteBatch);
         }
 
         public void StartGame() {
             player = new Player();
-            ball = new Ball(player);
+            ball = new Ball(player,level);
             Ball.gameStarted = false;
         }
     }

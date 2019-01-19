@@ -24,6 +24,11 @@ namespace Arcanoid.Class.Utils {
         public Texture2D playerTexture;
         public Texture2D ball;
 
+        // Blocks
+
+        public List<Texture2D> block1 = new List<Texture2D>();
+        public List<Texture2D> block2 = new List<Texture2D>();
+
         public TextureManager(ContentManager contentManager) {
             loadTextures(contentManager);
         }
@@ -45,6 +50,16 @@ namespace Arcanoid.Class.Utils {
             playerTexture = contentManager.Load<Texture2D>("Textures/Object/player");
             ball = contentManager.Load<Texture2D>("Textures/Object/ball");
 
+            // Blocks
+            // Block 1
+            block1.Add(contentManager.Load<Texture2D>("Textures/Object/Block1/block1_1"));
+            block1.Add(contentManager.Load<Texture2D>("Textures/Object/Block1/block1_2"));
+            block1.Add(contentManager.Load<Texture2D>("Textures/Object/Block1/block1_3"));
+            // Block 2
+            block2.Add(contentManager.Load<Texture2D>("Textures/Object/Block2/block2_1"));
+            block2.Add(contentManager.Load<Texture2D>("Textures/Object/Block2/block2_2"));
+            block2.Add(contentManager.Load<Texture2D>("Textures/Object/Block2/block2_3"));
+            
         }
     }
 }
