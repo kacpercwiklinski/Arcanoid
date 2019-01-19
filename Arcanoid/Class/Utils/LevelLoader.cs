@@ -33,16 +33,34 @@ namespace Arcanoid.Class.Utils {
         private static List<Block> loadLevel(String levelData) {
             List<Block> blocks = new List<Block>();
 
-            string[] lines = levelData.Split( new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            if (levelData.Equals("")) {
+                Random random = new Random();
 
-            for (int i = 0; i < lines.Length; i++) {
-                for (int j = 0; j < lines[i].Length; j++) {
-                    if (lines[i][j].Equals('0')) {
-                        blocks.Add(new Block("EmptyBlock", new Vector2(80 + j * 81, 50 + i * 25), Game1.textureManager.block1.ElementAt(0)));
-                    }else if (lines[i][j].Equals('1')) {
-                        blocks.Add(new Block("GrayBlock", new Vector2(80 + j * 81, 50 + i * 25), Game1.textureManager.block1.ElementAt(0)));
-                    } else if (lines[i][j].Equals('2')) {
-                        blocks.Add(new Block("RedBlock", new Vector2(80 + j * 81, 50 + i * 25), Game1.textureManager.block2.ElementAt(0)));
+                for (int i = 0; i < 7; i++) {
+                    for (int j = 0; j < 14; j++) {
+                        String randomChar = random.Next(0, 3).ToString();
+
+                        if (randomChar.Equals("0")) {
+                            blocks.Add(new Block("EmptyBlock", new Vector2(80 + j * 81, 50 + i * 25), Game1.textureManager.block1.ElementAt(0)));
+                        } else if (randomChar.Equals("1")) {
+                            blocks.Add(new Block("GrayBlock", new Vector2(80 + j * 81, 50 + i * 25), Game1.textureManager.block1.ElementAt(0)));
+                        } else if (randomChar.Equals("2")) {
+                            blocks.Add(new Block("RedBlock", new Vector2(80 + j * 81, 50 + i * 25), Game1.textureManager.block2.ElementAt(0)));
+                        }
+                    }
+                }
+            } else {
+                string[] lines = levelData.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+
+                for (int i = 0; i < lines.Length; i++) {
+                    for (int j = 0; j < lines[i].Length; j++) {
+                        if (lines[i][j].Equals('0')) {
+                            blocks.Add(new Block("EmptyBlock", new Vector2(80 + j * 81, 50 + i * 25), Game1.textureManager.block1.ElementAt(0)));
+                        } else if (lines[i][j].Equals('1')) {
+                            blocks.Add(new Block("GrayBlock", new Vector2(80 + j * 81, 50 + i * 25), Game1.textureManager.block1.ElementAt(0)));
+                        } else if (lines[i][j].Equals('2')) {
+                            blocks.Add(new Block("RedBlock", new Vector2(80 + j * 81, 50 + i * 25), Game1.textureManager.block2.ElementAt(0)));
+                        }
                     }
                 }
             }

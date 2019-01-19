@@ -17,7 +17,7 @@ namespace Arcanoid.Class.Object {
         public Rectangle boundingBox;
         public Color[] colorData;
         public Boolean isTriggerable;
-        Boolean destroyed;
+        public Boolean destroyed;
 
         public Block(string label, Vector2 position, Texture2D texture) {
             this.label = label;
@@ -28,9 +28,11 @@ namespace Arcanoid.Class.Object {
             this.destroyed = false;
             this.isTriggerable = true;
            
+            /*
             if (!this.label.Equals("EmptyBlock")) {
                 Game1.boundingBoxes.Add(this.boundingBox);
             }
+            */
 
             getColorData();
         }

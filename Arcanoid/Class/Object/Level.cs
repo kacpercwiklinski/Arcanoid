@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace Arcanoid.Class.Object {
     class Level {
 
         public List<Block> blocks;
-        public int levelIndex = 1;
+        public int levelIndex = 2;
         public Boolean started = false;
 
         public Level() {
@@ -21,18 +22,20 @@ namespace Arcanoid.Class.Object {
 
         public void initializeLevel(int levelIndex) {
             blocks = LevelLoader.getLevelBlocks(levelIndex);
+            blocks = blocks.FindAll((block) => !block.label.Equals("EmptyBlock"));
             started = true;
+            Debug.WriteLine(started);
         }
 
         public void Update(GameTime gameTime) {
-
             blocks.ForEach((block) => block.Update(gameTime));
 
             if(started && blocks.Count() == 0) {
                 levelIndex++;
                 initializeLevel(levelIndex);
-                Game1.boundingBoxes.Clear();
             }
+
+            blocks = blocks.FindAll((block) => !block.destroyed);
         }
 
         public void Draw(SpriteBatch spriteBatch) {

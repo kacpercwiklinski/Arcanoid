@@ -30,7 +30,7 @@ namespace Arcanoid.Class.Object {
             this.texture = Game1.textureManager.ball;
             this.position = new Vector2(this.player.position.X, this.player.position.Y - texture.Height);
             this.direction = new Vector2(3,-3);
-            this.speed = 50f;
+            this.speed = 200f;
             this.boundingBox = new Rectangle((int)this.position.X, (int)this.position.Y, this.texture.Width, this.texture.Height);
 
             getColorData();
