@@ -14,7 +14,7 @@ namespace Arcanoid.Class.Object {
         public static Boolean gameStarted = false;
 
         Random random;
-        Vector2 position;
+        public Vector2 position { get; set; }
         Texture2D texture;
         Vector2 direction;
         float speed;
@@ -22,6 +22,7 @@ namespace Arcanoid.Class.Object {
         Player player;
         Level level;
         Color[] colorData;
+        TailEffect tailEffect;
 
         public Ball(Player _player, Level _level) {
             random = new Random();
@@ -29,9 +30,13 @@ namespace Arcanoid.Class.Object {
             this.level = _level;
             this.texture = Game1.textureManager.ball;
             this.position = new Vector2(this.player.position.X, this.player.position.Y - texture.Height);
-            this.direction = new Vector2(3,-3);
-            this.speed = 200f;
+            this.direction = new Vector2((float)(1 + random.NextDouble()), (float)(-1 - random.NextDouble()));
+            this.direction.Normalize();
+
+            this.speed = 500f;
             this.boundingBox = new Rectangle((int)this.position.X, (int)this.position.Y, this.texture.Width, this.texture.Height);
+
+            tailEffect = new TailEffect(this);
 
             getColorData();
         }
@@ -40,19 +45,16 @@ namespace Arcanoid.Class.Object {
 
             this.player.position = player.getPlayerPos();
 
-            mapCollisions();
+            tailEffect.UpdateTail(gameTime);
+
             handleMovement(gameTime);
             updateBoundingBox();
-
+            mapCollisions();
+            
         }
 
         private void updateBoundingBox() {
-            if (Game1.boundingBoxes.Contains(this.boundingBox)){
-                Game1.boundingBoxes.Remove(this.boundingBox);
-            }
-
             this.boundingBox = new Rectangle((int)this.position.X - this.texture.Width / 2, (int)this.position.Y - this.texture.Height / 2, this.texture.Width, this.texture.Height);
-            Game1.boundingBoxes.Add(this.boundingBox);
         }
 
         private void handleMovement(GameTime gameTime) {
@@ -82,8 +84,9 @@ namespace Arcanoid.Class.Object {
 
             // Paddle intersections
             if (this.boundingBox.Intersects(player.boundingBox)) {
-                Vector2 normal = Vector2.Normalize(new Vector2(0, -player.texture.Width));
-                this.direction = Vector2.Reflect(this.direction, normal);
+                this.direction.Y = -this.direction.Y;
+                this.direction.X = this.direction.X + (player.paddleFriction * player.direction.X);
+                this.direction.Normalize();
             }
 
             // Block intersections
@@ -93,12 +96,24 @@ namespace Arcanoid.Class.Object {
                     if (collision) {
                         block.Hit();
 
+                        if ((this.boundingBox.Center.Y <= (block.boundingBox.Center.Y - block.boundingBox.Height / 2)) ||
+                        (this.boundingBox.Center.Y >= (block.boundingBox.Center.Y + block.boundingBox.Height / 2))) {
+                            // Horizontal collision
+                            Vector2 normal = Vector2.Normalize(new Vector2(0, Game1.WIDTH));
+                            this.direction = Vector2.Reflect(this.direction, normal);
+                        } else {
+                            // Vertical collision
+                            Vector2 normal = Vector2.Normalize(new Vector2(-Game1.WIDTH, 0));
+                            this.direction = Vector2.Reflect(this.direction, normal);
+                        }
                     }
                 }
             });
         }
 
         public void Draw(SpriteBatch spriteBatch) {
+            tailEffect.DrawTail(spriteBatch);
+
             spriteBatch.Draw(this.texture, new Vector2(this.position.X - this.texture.Width / 2, this.position.Y - this.texture.Height / 2), Color.White);
         }
 

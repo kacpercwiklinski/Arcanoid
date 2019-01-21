@@ -27,12 +27,6 @@ namespace Arcanoid.Class.Object {
             this.boundingBox = new Rectangle((int)this.position.X, (int)this.position.Y, this.texture.Width, this.texture.Height);
             this.destroyed = false;
             this.isTriggerable = true;
-           
-            /*
-            if (!this.label.Equals("EmptyBlock")) {
-                Game1.boundingBoxes.Add(this.boundingBox);
-            }
-            */
 
             getColorData();
         }
@@ -46,6 +40,10 @@ namespace Arcanoid.Class.Object {
 
         public void Hit() {
             this.lives--;
+        }
+
+        public void getNormal(Vector2 position) {
+
         }
 
         public virtual void Draw(SpriteBatch spriteBatch) {

@@ -24,7 +24,6 @@ namespace Arcanoid.Class.Object {
             blocks = LevelLoader.getLevelBlocks(levelIndex);
             blocks = blocks.FindAll((block) => !block.label.Equals("EmptyBlock"));
             started = true;
-            Debug.WriteLine(started);
         }
 
         public void Update(GameTime gameTime) {

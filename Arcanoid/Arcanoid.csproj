@@ -74,6 +74,7 @@
     <Compile Include="Class\Object\Block.cs" />
     <Compile Include="Class\Object\Level.cs" />
     <Compile Include="Class\Object\Player.cs" />
+    <Compile Include="Class\Object\TailEffect.cs" />
     <Compile Include="Class\Screen\GameOverScreen.cs" />
     <Compile Include="Class\Screen\GameScreen.cs" />
     <Compile Include="Class\Screen\HighScoresScreen.cs" />

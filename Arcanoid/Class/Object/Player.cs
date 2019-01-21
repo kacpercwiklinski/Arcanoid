@@ -11,16 +11,19 @@ using System.Threading.Tasks;
 namespace Arcanoid.Class.Object {
     class Player {
         public Vector2 position;
-        float speed = 400f;
+        public float speed = 600f;
         public Texture2D texture { get; set; }
         public int lives;
         public Rectangle boundingBox;
+        public float paddleFriction = 0.125f;
+        public Vector2 direction;
 
         public Player() {
             this.texture = Game1.textureManager.playerTexture;
             this.position = new Vector2(Game1.WIDTH / 2, Game1.HEIGHT - this.texture.Height );
             this.lives = 4;
             this.boundingBox = new Rectangle((int)this.position.X, (int)this.position.Y, this.texture.Width, this.texture.Height);
+            this.direction = new Vector2(0, 0);
         }
 
         public Vector2 getPlayerPos() {
@@ -33,22 +36,21 @@ namespace Arcanoid.Class.Object {
         }
 
         private void updateBoundingBox() {
-            if (Game1.boundingBoxes.Contains(this.boundingBox)) {
-                Game1.boundingBoxes.Remove(this.boundingBox);
-            }
-
             this.boundingBox = new Rectangle((int)this.position.X - this.texture.Width / 2, (int)this.position.Y - this.texture.Height / 2, this.texture.Width, this.texture.Height);
-            Game1.boundingBoxes.Add(this.boundingBox);
         }
 
         private void handleMovement(GameTime gameTime) {
             KeyboardState keyState = Keyboard.GetState();
 
             if (keyState.IsKeyDown(Keys.A) && this.position.X - this.texture.Width/2 > 0) {
-                this.position.X += -1 * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                this.direction.X = -1;
             } else if (keyState.IsKeyDown(Keys.D) && this.position.X + this.texture.Width / 2 < Game1.WIDTH) {
-                this.position.X += 1 * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                this.direction.X = 1;
+            }else {
+                this.direction.X = 0;
             }
+
+            this.position += this.direction * speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (keyState.IsKeyDown(Keys.Space) && !Ball.gameStarted) {
                 releaseBall();
