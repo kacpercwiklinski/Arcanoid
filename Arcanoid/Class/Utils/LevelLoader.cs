@@ -46,6 +46,8 @@ namespace Arcanoid.Class.Utils {
                             blocks.Add(new Block("GrayBlock", new Vector2(80 + j * 81, 50 + i * 25), Game1.textureManager.block1.ElementAt(0)));
                         } else if (randomChar.Equals("2")) {
                             blocks.Add(new Block("RedBlock", new Vector2(80 + j * 81, 50 + i * 25), Game1.textureManager.block2.ElementAt(0)));
+                        } else if (randomChar.Equals("3")) {
+                            blocks.Add(new Block("YellowBlock", new Vector2(80 + j * 81, 50 + i * 25), Game1.textureManager.block3.ElementAt(0)));
                         }
                     }
                 }
@@ -60,6 +62,8 @@ namespace Arcanoid.Class.Utils {
                             blocks.Add(new Block("GrayBlock", new Vector2(80 + j * 81, 50 + i * 25), Game1.textureManager.block1.ElementAt(0)));
                         } else if (lines[i][j].Equals('2')) {
                             blocks.Add(new Block("RedBlock", new Vector2(80 + j * 81, 50 + i * 25), Game1.textureManager.block2.ElementAt(0)));
+                        } else if (lines[i][j].Equals('3')) {
+                            blocks.Add(new Block("YellowBlock", new Vector2(80 + j * 81, 50 + i * 25), Game1.textureManager.block3.ElementAt(0)));
                         }
                     }
                 }

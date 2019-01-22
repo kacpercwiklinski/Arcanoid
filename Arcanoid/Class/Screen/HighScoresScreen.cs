@@ -49,7 +49,7 @@ namespace Arcanoid.Class.Screen {
             if (highScoresLoaded) {
                 highScores.Take(5).ToList().ForEach((score) => {
                     String scoreString = (highScores.IndexOf(score)+1).ToString() + ". " + score.ToString();
-                    spriteBatch.DrawString(Game1.textureManager.optionFont,scoreString,new Vector2(Game1.WIDTH/3,Game1.HEIGHT/4 + highScores.IndexOf(score) * 100),Color.White);
+                    spriteBatch.DrawString(Game1.textureManager.optionFont,scoreString,new Vector2(Game1.WIDTH/2.5f,Game1.HEIGHT/4 + highScores.IndexOf(score) * 100),Color.White);
                 });
             }
         }
@@ -67,6 +67,7 @@ namespace Arcanoid.Class.Screen {
                         highScores.Add(Convert.ToInt32(line));
                     }
                 }
+                highScores = highScores.Distinct().ToList();
                 highScores.Sort((x1,x2) => x2.CompareTo(x1));
 
                 reader.Close();

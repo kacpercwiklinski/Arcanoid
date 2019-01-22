@@ -198,6 +198,18 @@
 /processorParam:TextureFormat=Color
 /build:Textures/Object/Block2/block2_3.png
 
+#begin Textures/Object/Block3/block3_1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Textures/Object/Block3/block3_1.png
+
 #begin Textures/Object/player.png
 /importer:TextureImporter
 /processor:TextureProcessor

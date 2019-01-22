@@ -33,7 +33,7 @@ namespace Arcanoid.Class.Screen {
             options.ForEach((option) => {
                 Color fontColor = option.active ? Color.White : Color.DarkSlateGray;
                 float fontLenght = optionsFont.MeasureString(option.label).Length();
-                spriteBatch.DrawString(optionsFont, option.label, new Vector2((float)(Game1.WIDTH / 2) - fontLenght / 2, (float)(Game1.HEIGHT / 2) + index * 100), fontColor);
+                spriteBatch.DrawString(optionsFont, option.label, new Vector2((float)(Game1.WIDTH / 2) - fontLenght / 2, (float)(Game1.HEIGHT / 2 - 100) + index * 100), fontColor);
                 index++;
             });
         }

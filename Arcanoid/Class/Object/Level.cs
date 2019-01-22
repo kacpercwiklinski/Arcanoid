@@ -12,7 +12,7 @@ namespace Arcanoid.Class.Object {
     class Level {
 
         public List<Block> blocks;
-        public int levelIndex = 2;
+        public int levelIndex = 1;
         public Boolean started = false;
 
         public Level() {
