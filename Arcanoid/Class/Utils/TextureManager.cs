@@ -11,6 +11,7 @@ namespace Arcanoid.Class.Utils {
 
         // Fonts
         public SpriteFont optionFont;
+        public SpriteFont gameOverScoreFont;
 
         // Background
         public Texture2D splashScreenBackground;
@@ -37,6 +38,7 @@ namespace Arcanoid.Class.Utils {
 
             // Fonts
             optionFont = contentManager.Load<SpriteFont>("Fonts/optionFont");
+            gameOverScoreFont = contentManager.Load<SpriteFont>("Fonts/gameOverScoreFont");
 
             // Background
             splashScreenBackground = contentManager.Load<Texture2D>("Textures/Background/splashScreenBackground");

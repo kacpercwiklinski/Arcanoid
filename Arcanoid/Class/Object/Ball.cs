@@ -43,9 +43,9 @@ namespace Arcanoid.Class.Object {
 
         public void Update(GameTime gameTime) {
 
-            this.player.position = player.getPlayerPos();
+            //this.player.position = player.getPlayerPos();
 
-            tailEffect.UpdateTail(gameTime);
+            //tailEffect.UpdateTail(gameTime);
 
             handleMovement(gameTime);
             updateBoundingBox();
@@ -54,7 +54,8 @@ namespace Arcanoid.Class.Object {
         }
 
         private void updateBoundingBox() {
-            this.boundingBox = new Rectangle((int)this.position.X - this.texture.Width / 2, (int)this.position.Y - this.texture.Height / 2, this.texture.Width, this.texture.Height);
+            this.boundingBox.X = (int)this.position.X - this.texture.Width / 2;
+            this.boundingBox.Y = (int)this.position.Y - this.texture.Height / 2;
         }
 
         private void handleMovement(GameTime gameTime) {
@@ -75,8 +76,8 @@ namespace Arcanoid.Class.Object {
                 Vector2 normal = Vector2.Normalize(new Vector2(Game1.HEIGHT, 0));
                 this.direction = Vector2.Reflect(this.direction, normal);
             } else if (this.position.Y + this.texture.Width / 2 >= Game1.HEIGHT) {
-                Vector2 normal = Vector2.Normalize(new Vector2(0, Game1.WIDTH));
-                this.direction = Vector2.Reflect(this.direction, normal);
+                resetBallPos();
+                Player.lives--;
             } else if(this.position.Y - this.texture.Width / 2 <= 0) {
                 Vector2 normal = Vector2.Normalize(new Vector2(0, -Game1.WIDTH));
                 this.direction = Vector2.Reflect(this.direction, normal);
@@ -90,7 +91,7 @@ namespace Arcanoid.Class.Object {
             }
 
             // Block intersections
-            level.blocks.ForEach((block) => {
+            level.blocks.FindAll((block)=> Vector2.Distance(this.position,block.position) < 80f).ForEach((block) => {
                 if (block.boundingBox.Intersects(this.boundingBox) && block.isTriggerable) {
                     bool collision = PerPixelCollision.IntersectsPixel(boundingBox, this.colorData, block.boundingBox, block.colorData);
                     if (collision) {
@@ -112,9 +113,14 @@ namespace Arcanoid.Class.Object {
         }
 
         public void Draw(SpriteBatch spriteBatch) {
-            tailEffect.DrawTail(spriteBatch);
+            //tailEffect.DrawTail(spriteBatch);
 
             spriteBatch.Draw(this.texture, new Vector2(this.position.X - this.texture.Width / 2, this.position.Y - this.texture.Height / 2), Color.White);
+        }
+
+        private void resetBallPos() {
+            this.position = new Vector2(player.position.X, player.position.Y - texture.Height);
+            gameStarted = false;
         }
 
         public void getColorData() {

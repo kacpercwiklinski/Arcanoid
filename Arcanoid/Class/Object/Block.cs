@@ -1,4 +1,5 @@
-﻿using Arcanoid.Class.Utils;
+﻿using Arcanoid.Class.Screen;
+using Arcanoid.Class.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -39,6 +40,7 @@ namespace Arcanoid.Class.Object {
         }
 
         public void Hit() {
+            GameScreen.score += 100;
             this.lives--;
         }
 

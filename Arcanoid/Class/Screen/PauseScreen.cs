@@ -18,6 +18,11 @@ namespace Arcanoid.Class.Screen {
         }
 
         public override void Update(GameTime gameTime) {
+
+            if (Keyboard.GetState().IsKeyDown(Keys.Space)) {
+                ScreenEvent.Invoke(this, new EventArgs());
+            }
+
             base.Update(gameTime);
         }
 

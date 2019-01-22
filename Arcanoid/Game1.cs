@@ -96,7 +96,13 @@ namespace Arcanoid
         }
 
         private void gameScreenEvent(object sender, EventArgs e) {
-            mCurrentScreen = mGameOverScreen;
+            if(mGameScreen.eventType == EventType.Pause) {
+                mCurrentScreen = mPauseScreen;
+            }else if (mGameScreen.eventType == EventType.Exit) {
+                mCurrentScreen = mMainMenuScreen;
+            } else if (mGameScreen.eventType == EventType.GameOver) {
+                mCurrentScreen = mGameOverScreen;
+            }
         }
 
         private void mainMenuScreenEvent(object sender, EventArgs e) {
@@ -104,7 +110,9 @@ namespace Arcanoid
             if (chosenOption.label.Equals("Play")) {
                 mCurrentScreen = mGameScreen;
                 mGameScreen.StartGame();
-            }  else if (chosenOption.label.Equals("Exit")) {
+            } else if (chosenOption.label.Equals("Highscores")) {
+                mCurrentScreen = mHighScoresScreen;
+            } else if (chosenOption.label.Equals("Exit")) {
                 Exit();
             }
         }

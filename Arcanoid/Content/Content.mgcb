@@ -13,12 +13,28 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Fonts/ARKANOID.TTF
+/copy:Fonts/ARKANOID.TTF
+
+#begin Fonts/gameOverScoreFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/gameOverScoreFont.spritefont
+
 #begin Fonts/optionFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Fonts/optionFont.spritefont
+
+#begin Fonts/sc.ttf
+/copy:Fonts/sc.ttf
+
+#begin highscores.txt
+/copy:highscores.txt
 
 #begin Level/level1.txt
 /copy:Level/level1.txt

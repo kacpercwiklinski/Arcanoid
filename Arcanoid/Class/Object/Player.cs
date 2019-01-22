@@ -13,7 +13,7 @@ namespace Arcanoid.Class.Object {
         public Vector2 position;
         public float speed = 600f;
         public Texture2D texture { get; set; }
-        public int lives;
+        public static int lives { get; set; }
         public Rectangle boundingBox;
         public float paddleFriction = 0.125f;
         public Vector2 direction;
@@ -21,7 +21,7 @@ namespace Arcanoid.Class.Object {
         public Player() {
             this.texture = Game1.textureManager.playerTexture;
             this.position = new Vector2(Game1.WIDTH / 2, Game1.HEIGHT - this.texture.Height );
-            this.lives = 4;
+            lives = 4;
             this.boundingBox = new Rectangle((int)this.position.X, (int)this.position.Y, this.texture.Width, this.texture.Height);
             this.direction = new Vector2(0, 0);
         }
@@ -36,7 +36,8 @@ namespace Arcanoid.Class.Object {
         }
 
         private void updateBoundingBox() {
-            this.boundingBox = new Rectangle((int)this.position.X - this.texture.Width / 2, (int)this.position.Y - this.texture.Height / 2, this.texture.Width, this.texture.Height);
+            this.boundingBox.X = (int)this.position.X - this.texture.Width / 2;
+            this.boundingBox.Y = (int)this.position.Y - this.texture.Height / 2;
         }
 
         private void handleMovement(GameTime gameTime) {

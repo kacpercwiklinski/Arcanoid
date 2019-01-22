@@ -22,6 +22,7 @@ namespace Arcanoid.Class.Screen {
 
             options = new List<Option>();
             options.Add(new Option("Play", true));
+            options.Add(new Option("Highscores", false));
             options.Add(new Option("Exit", false));
 
             optionsFont = Game1.textureManager.optionFont;
