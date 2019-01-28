@@ -16,6 +16,8 @@ namespace Arcanoid.Class.Screen {
 
         List<int> highScores;
 
+        private String filePath = "D:/Arkanoid/highscores.txt";
+
         Boolean highScoresLoaded = false;
 
         public HighScoresScreen(EventHandler theScreenEvent) : base(theScreenEvent) {
@@ -57,7 +59,7 @@ namespace Arcanoid.Class.Screen {
         private void getHighscores() {
             highScores.Clear();
 
-            if (File.Exists("D:/Arkanoid/highscores.txt")) {
+            if (File.Exists(filePath)) {
                 var reader = new StreamReader("D:/Arkanoid/highscores.txt");
                 String stringData = reader.ReadToEnd();
 

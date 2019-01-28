@@ -31,7 +31,9 @@ namespace Arcanoid.Class.Object {
 
             if(started && blocks.Count() == 0) {
                 levelIndex++;
+                Game1.audioManager.nextLevel.Play(0.2f, 1f, 1f);
                 initializeLevel(levelIndex);
+                Ball.gameStarted = false;
             }
 
             blocks = blocks.FindAll((block) => !block.destroyed);

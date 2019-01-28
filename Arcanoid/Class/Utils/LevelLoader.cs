@@ -38,7 +38,7 @@ namespace Arcanoid.Class.Utils {
 
                 for (int i = 0; i < 7; i++) {
                     for (int j = 0; j < 14; j++) {
-                        String randomChar = random.Next(0, 3).ToString();
+                        String randomChar = random.Next(0, 4).ToString();
 
                         if (randomChar.Equals("0")) {
                             blocks.Add(new Block("EmptyBlock", new Vector2(80 + j * 81, 50 + i * 25), Game1.textureManager.block1.ElementAt(0)));

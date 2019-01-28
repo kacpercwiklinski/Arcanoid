@@ -13,6 +13,30 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Audio/blockHit.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/blockHit.wav
+
+#begin Audio/gameOver.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/gameOver.wav
+
+#begin Audio/lostLive.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/lostLive.wav
+
+#begin Audio/nextLevel.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Audio/nextLevel.wav
+
 #begin Fonts/ARKANOID.TTF
 /copy:Fonts/ARKANOID.TTF
 

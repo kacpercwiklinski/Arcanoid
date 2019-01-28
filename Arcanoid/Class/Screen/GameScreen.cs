@@ -42,15 +42,18 @@ namespace Arcanoid.Class.Screen {
             level.Update(gameTime);
             ui.Update(gameTime);
 
-            if (Keyboard.GetState().IsKeyDown(Keys.X)) {
-                Player.lives = 0;
+            /*
+            if (Keyboard.GetState().IsKeyDown(Keys.X) && !Keyboard.GetState().IsKeyUp(Keys.X)) {
+                level.blocks.Clear();
             }
+            */
 
             if (Keyboard.GetState().IsKeyDown(Keys.P)) {
                 eventType = EventType.Pause;
             } else if (Keyboard.GetState().IsKeyDown(Keys.E)) {
                 eventType = EventType.Exit;
             } else if(Player.lives <= 0) {
+                Game1.audioManager.gameOver.Play(0.2f, 1f, 1f);
                 eventType = EventType.GameOver;
             } else {
                 eventType = EventType.None;

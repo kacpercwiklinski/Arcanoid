@@ -77,6 +77,7 @@ namespace Arcanoid.Class.Object {
                 this.direction = Vector2.Reflect(this.direction, normal);
             } else if (this.position.Y + this.texture.Width / 2 >= Game1.HEIGHT) {
                 resetBallPos();
+                Game1.audioManager.lostLive.Play(0.2f, 1f, 1f);
                 Player.lives--;
             } else if(this.position.Y - this.texture.Width / 2 <= 0) {
                 Vector2 normal = Vector2.Normalize(new Vector2(0, -Game1.WIDTH));
@@ -96,6 +97,7 @@ namespace Arcanoid.Class.Object {
                     bool collision = PerPixelCollision.IntersectsPixel(boundingBox, this.colorData, block.boundingBox, block.colorData);
                     if (collision) {
                         block.Hit();
+                        Game1.audioManager.blockHit.Play(0.2f, 0.1f, 1f);
 
                         if ((this.boundingBox.Center.Y <= (block.boundingBox.Center.Y - block.boundingBox.Height / 2)) ||
                         (this.boundingBox.Center.Y >= (block.boundingBox.Center.Y + block.boundingBox.Height / 2))) {
